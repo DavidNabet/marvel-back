@@ -16,15 +16,16 @@ app.use(formidable());
 app.use(cors());
 
 app.use("/user", require("./routes/user"));
+app.use(require("./routes/fiches"));
 
 app.get("/", (req, res) => {
   res.json("Welcome to Marvel API !");
 });
 
 app.all("*", (req, res) => {
-  res.status(400).json({ error: "Cette route n'existe pas !" });
+  res.status(404).json({ error: "Cette route n'existe pas !" });
 });
 
 app.listen(process.env.PORT || 3200, () => {
-  console.log("Server proccess 🎉");
+  console.log("Server proccess");
 });
