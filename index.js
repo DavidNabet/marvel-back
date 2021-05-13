@@ -17,6 +17,7 @@ app.use(cors());
 
 app.use("/user", require("./routes/user"));
 app.use(require("./routes/fiches"));
+app.use(require("./routes/favorite"));
 
 app.get("/", (req, res) => {
   res.json("Welcome to Marvel API !");

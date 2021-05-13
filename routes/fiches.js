@@ -2,10 +2,12 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 
+const { MARVEL_API_KEY, REACTEUR_URI_PATHNAME } = process.env;
+
 router.get("/comics", async (req, res) => {
   try {
     const response = await axios.get(
-      `${REACTEUR_URI_PATHNAME}/comics/?apiKey=${process.env.MARVEL_API_KEY}`,
+      `${REACTEUR_URI_PATHNAME}/comics/?apiKey=${MARVEL_API_KEY}`,
       {
         params: {
           title: req.query.title,
@@ -27,7 +29,7 @@ router.get("/comics", async (req, res) => {
 router.get("/comics/:characterId", async (req, res) => {
   try {
     const response = await axios.get(
-      `${REACTEUR_URI_PATHNAME}/comics/${req.params.characterId}?apiKey=${process.env.MARVEL_API_KEY}`
+      `${REACTEUR_URI_PATHNAME}/comics/${req.params.characterId}?apiKey=${MARVEL_API_KEY}`
     );
 
     res.status(200).json(response.data);
@@ -40,7 +42,7 @@ router.get("/comics/:characterId", async (req, res) => {
 router.get("/characters", async (req, res) => {
   try {
     const response = await axios.get(
-      `${REACTEUR_URI_PATHNAME}/characters?apiKey=${process.env.MARVEL_API_KEY}`,
+      `${REACTEUR_URI_PATHNAME}/characters?apiKey=${MARVEL_API_KEY}`,
       {
         params: {
           name: req.query.name,
