@@ -23,16 +23,11 @@ router.post("/signup", async (req, res) => {
         // Génère un token (la string est aléatoire)
         const token = uid2(64);
         // Déclaration des favoris
-        const favorites = {
-          characters: [],
-          comics: [],
-        };
 
         const newUser = new User({
           email,
           token,
           username,
-          favorites,
           hash: hashPassword,
           salt,
         });
@@ -43,7 +38,6 @@ router.post("/signup", async (req, res) => {
           email: newUser.email,
           token: newUser.token,
           username: newUser.username,
-          favorites: newUser.favorites,
         });
       } else {
         res.status(400).json({ error: "Missing parameters" });
@@ -71,7 +65,6 @@ router.post("/login", async (req, res) => {
             _id: user._id,
             token: user.token,
             username: user.username,
-            favorites: user.favorites,
           });
         }
       }

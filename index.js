@@ -5,19 +5,23 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 
-mongoose.connect(process.env.MONGO_LOCAL_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-});
+mongoose.connect(
+  process.env.NODE_ENV === "development"
+    ? process.env.MONGO_LOCAL_URI
+    : process.env.MONGO_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  }
+);
 
 app.use(formidable());
 app.use(cors());
 
 app.use("/user", require("./routes/user"));
 app.use(require("./routes/fiches"));
-app.use(require("./routes/favorite"));
 
 app.get("/", (req, res) => {
   res.json("Welcome to Marvel API !");
