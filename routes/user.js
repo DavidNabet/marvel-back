@@ -14,33 +14,38 @@ router.post("/signup", async (req, res) => {
       // Si l'email existe
       res.status(409).json({ message: "This email is already exists" });
     } else {
-      // Tous les champs doivent être renseignés
-      if (email && password && username) {
-        // Génère un salt
-        const salt = uid2(16);
-        // Génère un hash
-        const hashPassword = SHA256(salt + password).toString(encBase64);
-        // Génère un token (la string est aléatoire)
-        const token = uid2(64);
-        // Déclaration des favoris
-
-        const newUser = new User({
-          email,
-          token,
-          username,
-          hash: hashPassword,
-          salt,
-        });
-
-        await newUser.save();
-        res.status(200).json({
-          _id: newUser._id,
-          email: newUser.email,
-          token: newUser.token,
-          username: newUser.username,
-        });
+      const userUsername = await User.findOne({ username: username });
+      if (userUsername) {
+        res.status(400).json({ message: "This username is already used" });
       } else {
-        res.status(400).json({ error: "Missing parameters" });
+        // Tous les champs doivent être renseignés
+        if (username && email && password) {
+          // Génère un salt
+          const salt = uid2(16);
+          // Génère un hash
+          const hashPassword = SHA256(salt + password).toString(encBase64);
+          // Génère un token (la string est aléatoire)
+          const token = uid2(64);
+          // Déclaration des favoris
+
+          const newUser = new User({
+            email,
+            token,
+            username,
+            hash: hashPassword,
+            salt,
+          });
+
+          await newUser.save();
+          res.status(200).json({
+            _id: newUser._id,
+            email: newUser.email,
+            token: newUser.token,
+            username: newUser.username,
+          });
+        } else {
+          res.status(400).json({ error: "Missing parameters" });
+        }
       }
     }
   } catch (err) {
