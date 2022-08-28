@@ -1,6 +1,5 @@
-const express = require("express");
+const router = require("express").Router();
 const axios = require("axios");
-const router = express.Router();
 
 const { MARVEL_API_KEY, REACTEUR_URI_PATHNAME } = process.env;
 

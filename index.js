@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
+const port = process.env.PORT || 3200;
 
 mongoose.connect(
   process.env.NODE_ENV === "development"
@@ -31,6 +32,6 @@ app.all("*", (req, res) => {
   res.status(404).json({ error: "Cette route n'existe pas !" });
 });
 
-app.listen(process.env.PORT || 3200, () => {
-  console.log("Server proccess");
+app.listen(port, () => {
+  console.log(`Server running to ${port}`);
 });
