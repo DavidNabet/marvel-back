@@ -9,13 +9,7 @@ const port = process.env.PORT || 3200;
 mongoose.connect(
   process.env.NODE_ENV === "development"
     ? process.env.MONGO_LOCAL_URI
-    : process.env.MONGO_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  }
+    : process.env.MONGO_URI
 );
 
 app.use(formidable());
